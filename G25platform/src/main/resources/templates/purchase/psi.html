@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:include="include/includebase">
+
+
+</head>
+<body class='contrast-red '>
+	<header>
+		<div th:insert="~{components/header :: header}"></div>
+	</header>
+	<!-- start: wrapper' -->
+	<div id='wrapper'>
+		<div id='main-nav-bg'></div>
+		<!-- start: Main Menu -->
+		<div th:insert="~{components/mainmenu :: mainmenu}"></div>
+		<!-- end: Main Menu -->
+
+		<!-- start: Content -->
+		<section id='content'>
+			<div class='container-fluid'>
+				<!-- start: content-wrapper -->
+				<div class='row-fluid' id='content-wrapper'>
+					<div class='span12'>
+						<div class='row-fluid'>
+							<div class='span12'>
+								<div class='page-header'>
+									<h1 class='pull-left'>
+										<i class='icon-key'></i><span>PSI</span>
+									</h1>
+									<div class='pull-right'>
+										<ul class='breadcrumb'>
+											<li><a href="/G25/"><i class='icon-bar-chart'></i> </a>
+											</li>
+											<li>系統管理</li>
+											<li class='separator'><i class='icon-angle-right'></i></li>
+											<li class='active'>下載加班計畫</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class='row-fluid'>
+							<div class='span12 box bordered-box orange-border' style='margin-bottom: 0;'>
+								<div class='box-header purple-background'>
+									<div class='title'>
+										<i class="icon-table" th:text="查詢"></i>
+									</div>
+								</div>
+
+								<div class='box-content box-no-padding'>
+									<div class='responsive-table'>
+
+
+										<div class="box-content">
+
+											<form name="form_find" class="form-horizontal" method="post">
+												<fieldset>
+													<div class='span4'>
+
+														<div class="row-fluid">
+															<strong>品牌</strong>
+															<div>
+
+																<select name='find_tqa' id="find_tqa" style="width: 205px">
+																	<option value="">全部</option>
+																	<!-- th:if="${isRoleSSR}"  -->
+																	<option th:each="tqa:${tqas}" th:value="${tqa.tqa01}" th:selected="${tqa.tqa01==find_tqa}">[[${tqa.tqa02}]]([[${tqa.tqa01}]])</option>
+																</select>
+															</div>
+														</div>
+
+														<div class="row-fluid">
+															<strong>品號</strong>
+															<div>
+																<input type="text" id="find_IMA01" name="find_IMA01" th:value="${find_IMA01}" style="width: 135px">
+															</div>
+														</div>
+
+														<div class="row-fluid">
+															<strong>未完成售定量</strong>
+															<div>
+																<select name='order_is' id="order_is" style="width: 90px">
+																	<option value=""></option>
+																	<option value="2" th:selected="${order_is}=='2'">不等於0</option>
+																</select>
+															</div>
+														</div>
+													</div>
+													<div class='span4'>
+
+
+														<div class="row-fluid">
+															<strong>可接單量</strong>
+															<div>
+																<select name='can_get_order' id="can_get_order" style="width: 100px">
+																	<option value=""></option>
+																	<option value="2" th:selected="${can_get_order}=='2'">大於0</option>
+																	<option value="3" th:selected="${can_get_order}=='3'">小於等於0</option>
+																</select>
+															</div>
+														</div>
+
+														<div class="row-fluid">
+															<strong>供應商</strong>
+															<div>
+
+																<select name='find_pmc' id="find_pmc" style="width: 205px">
+																	<option value="">全部</option>
+																	<!-- th:if="${isRoleSSR}"  -->
+																	<option th:each="pmc:${pmclist}" th:value="${pmc.pmc01}" th:selected="${pmc.pmc01==find_pmc}">[[${pmc.pmc03}]]([[${pmc.pmc01}]])</option>
+																</select>
+															</div>
+														</div>
+
+														<div class="row-fluid">
+															<strong>商品狀態</strong>
+															<div>
+
+																<select name='find_ima1004' id="find_ima1004" style="width: 205px">
+																	<option value="">全部</option>
+																	<!-- th:if="${isRoleSSR}"  -->
+																	<option th:each="tqa:${tqalist}" th:value="${tqa.tqa01}" th:selected="${tqa.tqa01==find_ima1004}">[[${tqa.tqa02}]]([[${tqa.tqa01}]])</option>
+																</select>
+															</div>
+														</div>
+
+													</div>
+
+													<div class='span4'>
+
+
+														<div class="row-fluid">
+															<strong>採購大類</strong>
+															<div>
+
+																<select name='find_IMA06' id="find_IMA06"
+																	style="width: 205px">
+																	<option value="">全部</option>
+																	<!-- th:if="${isRoleSSR}"  -->
+																	<option th:each="imz:${imzlist}"
+																		th:value="${imz.imz01}"
+																		th:selected="${imz.imz01==find_IMA06}">[[${imz.imz02}]]([[${imz.imz01}]])</option>
+																</select>
+															</div>
+														</div>
+
+
+														<div class="row-fluid">
+															<strong>產品大類</strong>
+															<div>
+
+																<select name='find_IMA131' id="find_IMA131"
+																	style="width: 205px">
+																	<option value="">全部</option>
+																	<!-- th:if="${isRoleSSR}"  -->
+																	<option th:each="oba:${obalist}"
+																		th:value="${oba.oba01}"
+																		th:selected="${oba.oba01==find_IMA131}">[[${oba.oba02}]]([[${oba.oba01}]])</option>
+																</select>
+															</div>
+														</div>
+
+														<div class="row-fluid">
+															<strong> </strong>
+															<div>
+
+																<input type="hidden" id="type" name="type"
+																	th:value="list">
+																<button class="btn btn btn-info" onclick="find()">確認</button>
+
+																<button class="btn btn-success" type="button"
+																	onclick="down1()">下載</button>
+																(列表限制300筆，下載不限)
+
+															</div>
+														</div>
+
+													</div>
+
+												</fieldset>
+
+
+
+
+											</form>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class='row-fluid'>
+							<div class='span12 box bordered-box orange-border'
+								style='margin-bottom: 0;'>
+								<div class='box-header purple-background'>
+									<div class='title'>
+										<i class="icon-table" th:text=" PSI"></i>
+									</div>
+								</div>
+
+
+
+
+
+								<div class='box-content box-no-padding'>
+									<div class='responsive-table'>
+										<div class='scrollable-area'>
+
+											<form name="form1" class="form-horizontal" method="post">
+
+												<input name="find_tqa" id="find_tqa" type="hidden" th:value="${find_tqa}" /> 
+												<input name="find_IMA01" id="find_IMA01" type="hidden" th:value="${find_IMA01}" /> 
+												<input name="order_is" id="order_is" type="hidden" th:value="${order_is}" /> 
+												<input name="can_get_order" id="can_get_order" type="hidden" th:value="${can_get_order}" /> 
+												<input name="find_pmc" id="find_pmc" type="hidden" th:value="${find_pmc}" /> 
+												<input name="find_ima1004" id="find_ima1004" type="hidden" th:value="${find_ima1004}" /> 
+												<input name="find_IMA06" id="find_IMA06" type="hidden" th:value="${find_IMA06}" /> 
+												<input name="find_IMA131" id="find_IMA131" type="hidden" th:value="${find_IMA131}" /> 
+												<input name="com" id="com" type="hidden" value="" /> 
+												<input name="ima01" id="ima01" type="hidden" value="" /> 
+												<input name="ps" id="ps" type="hidden" value="" /> 
+												<input name="set_d2" id="set_d2" type="hidden" value="" /> 
+												<input name="set_d3" id="set_d3" type="hidden" value="" /> 
+												<input name="set_d4" id="set_d4" type="hidden" value="" /> 
+												<input name="set_d5" id="set_d5" type="hidden" value="" /> 
+												<input name="set_d6" id="set_d6" type="hidden" value="" />
+
+												<!-- 				
+							<table id="tUser" class="table" style="table-layout:auto;">
+-->
+												<table id="tUser"
+													class='data-table-column-filter table table-bordered table-striped yy_ytable'
+													style="table-layout: auto;">
+
+													<thead>
+														<tr>
+															<td colspan="17"></td>
+															<td colspan="2" th:text="${month_0}" bgcolor="#FCE9DA"></td>
+															<td colspan="3" th:text="${month_1}" bgcolor="#E1F1E7"></td>
+															<td colspan="3" th:text="${month_2}" bgcolor="#E1F1E7"></td>
+															<td colspan="3" th:text="${month_3}" bgcolor="#E1F1E7"></td>
+															<td colspan="3" th:text="${month_4}" bgcolor="#E1F1E7"></td>
+															<td colspan="3" th:text="${month_5}" bgcolor="#E1F1E7"></td>
+															<td colspan="3"></td>
+														</tr>
+														<tr>
+															<th style="white-space: nowrap;">企業別</th>
+															<!-- 666 -->
+															<th style="white-space: nowrap;">供應商</th>
+															<th style="white-space: nowrap;">商品狀態</th>
+															<!-- ima54 -->
+															<th style="white-space: nowrap;">採購大類</th>
+															<!-- ima06 -->
+															<th style="white-space: nowrap;">商品大類</th>
+															<th style="white-space: nowrap;">品牌</th>
+
+															<th style="white-space: nowrap;">品號</th>
+															<!-- ima01 -->
+
+
+															<th style="white-space: nowrap;">品號總售訂量</th>
+															<th style="white-space: nowrap;">品號總量</th>
+															<th style="white-space: nowrap;">存貨倉備貨庫存總量(備貨數量)</th>
+															<th style="white-space: nowrap;">存貨倉陳列庫存總量(陳列數量)</th>
+															<th style="white-space: nowrap;">存貨倉庫存總量</th>
+															<th style="white-space: nowrap;">承銷倉備貨庫存總量</th>
+															<th style="white-space: nowrap;">承銷倉陳列庫存總量</th>
+															<th style="white-space: nowrap;">承銷倉庫存總量(承銷數量)</th>
+															<th style="white-space: nowrap;">在途倉庫存總量</th>
+															<th style="white-space: nowrap;">其他倉庫儲位庫存總量</th>
+
+
+															<th style="white-space: nowrap;">售訂未銷量</th>
+															<th style="white-space: nowrap;">可再接單</th>
+
+															<th style="white-space: nowrap;">PSI</th>
+															<th style="white-space: nowrap;">售訂</th>
+															<th style="white-space: nowrap;">可再接單</th>
+															<th style="white-space: nowrap;">PSI</th>
+															<th style="white-space: nowrap;">售訂</th>
+															<th style="white-space: nowrap;">可再接單</th>
+															<th style="white-space: nowrap;">PSI</th>
+															<th style="white-space: nowrap;">售訂</th>
+															<th style="white-space: nowrap;">可再接單</th>
+															<th style="white-space: nowrap;">PSI</th>
+															<th style="white-space: nowrap;">售訂</th>
+															<th style="white-space: nowrap;">可再接單</th>
+															<th style="white-space: nowrap;">PSI</th>
+															<th style="white-space: nowrap;">售訂</th>
+															<th style="white-space: nowrap;">可再接單</th>
+
+															<th style="white-space: nowrap;">備註</th>
+															<th style="white-space: nowrap;" th:if="${is_purch} ==1">處理</th>
+															<th style="white-space: nowrap;">品名</th>
+															<!-- ima02 -->
+															<th style="white-space: nowrap;">規格</th>
+															<!-- ima021 -->
+
+														</tr>
+													</thead>
+
+													<tbody>
+														<tr th:each="sud,iterStat : ${IMA}">
+
+															<td th:text="集雅社" style="word-wrap: break-word;"></td>
+
+															<td th:text="${sud.pmc03}+'('+${sud.pmc01}+')'" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.tqa02t2}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.imz02}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.oba02}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.tqa02t1}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.ima01}" style="word-wrap: break-word;"></td>
+
+
+
+															<td th:text="${sud.SUMOEB12}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG03_1}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG03_2}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG02_1}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG03_3}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG03_4}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG02_2}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG02_3}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG02_4}" style="word-wrap: break-word;"></td>
+
+
+															<td th:text="${sud.a1}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG03_1-sud.a1}" style="word-wrap: break-word;"></td>
+
+
+															<td style="word-wrap: break-word;"><input th:if="${is_purch} == 1" type="text" th:id="${'d2_'+sud.ima01}" style="width: 35px" th:value="${sud.d2}" th:onchange="chk('${sud.ima01}')">
+																<span th:if="${is_purch} != 1">[[${sud.d2}]]</span></td>
+															<td th:text="${sud.o1}" style="word-wrap: break-word;" id="o1"></td>
+															<td th:text="${sud.SUMIMG10IMG03_1-sud.a1+sud.d2-sud.o1}" id="dd2" style="word-wrap: break-word;"></td>
+
+
+															<td style="word-wrap: break-word;"><input th:if="${is_purch} == 1" type="text" th:id="${'d3_'+sud.ima01}" style="width: 35px" th:value="${sud.d3}"> 
+															<span th:if="${is_purch} != 1">[[${sud.d3}]]</span></td>
+															<td th:text="${sud.o2}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG03_1-sud.a1+sud.d2-sud.o1+sud.d3-sud.o2}" style="word-wrap: break-word;"></td>
+
+
+															<td style="word-wrap: break-word;"><input th:if="${is_purch} == 1" type="text" th:id="${'d4_'+sud.ima01}" style="width: 35px" th:value="${sud.d4}"> 
+															<span th:if="${is_purch} != 1">[[${sud.d4}]]</span></td>
+															<td th:text="${sud.o3}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG03_1-sud.a1+sud.d2-sud.o1+sud.d3-sud.o2+sud.d4-sud.o3}" style="word-wrap: break-word;"></td>
+
+
+															<td style="word-wrap: break-word;"><input th:if="${is_purch} == 1" type="text" th:id="${'d5_'+sud.ima01}" style="width: 35px" th:value="${sud.d5}"> 
+															<span th:if="${is_purch} != 1">[[${sud.d5}]]</span></td>
+															<td th:text="${sud.o4}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG03_1-sud.a1+sud.d2-sud.o1+sud.d3-sud.o2+sud.d4-sud.o3+sud.d5-sud.o4}" style="word-wrap: break-word;"></td>
+
+
+															<td style="word-wrap: break-word;"><input th:if="${is_purch} ==1" type="text" th:id="${'d6_'+sud.ima01}" style="width: 35px" th:value="${sud.d6}"> 
+															<span th:if="${is_purch} != 1">[[${sud.d6}]]</span></td>
+															<td th:text="${sud.o5}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.SUMIMG10IMG03_1-sud.a1+sud.d2-sud.o1+sud.d3-sud.o2+sud.d4-sud.o3+sud.d5-sud.o4+sud.d6-sud.o5}" style="word-wrap: break-word;"></td>
+
+
+
+
+															<td><textarea th:if="${is_purch} == 1" rows="1" th:id="${'ps_'+sud.ima01}" th:text=" ${sud.ps}">  </textarea>
+																<span th:if="${is_purch} !=  1">[[${sud.ps}]]</span></td>
+															<td th:if="${is_purch} == 1"><button class="btn btn-danger" th:onclick="send([[${sud.ima01}]])">
+																	<span class="icon-save"></span>
+																</button></td>
+
+															<td th:text="${sud.ima02}" style="word-wrap: break-word;"></td>
+															<td th:text="${sud.ima021}" style="word-wrap: break-word;"></td>
+
+														</tr>
+													</tbody>
+												</table>
+											</form>
+										</div>
+									</div>
+									<!-- /responsive-table -->
+
+								</div>
+								<!--/box-content-->
+
+
+
+							</div>
+							<!--/span-->
+						</div>
+						<!--/row-->
+
+					</div>
+				</div>
+				<!-- end: content-wrapper -->
+			</div>
+		</section>
+		<!-- end: Content -->
+	</div>
+	<!-- end: wrapper' -->
+	<div th:insert="~{components/footer :: footer}"></div>
+
+
+
+</body>
+</html>
+
+
+<script type="text/Javascript" th:inline="javascript">
+
+
+function down1(){
+	document.getElementById('type').value='down';
+
+	var url = [[@{/purchase/psi/psi_down}]];
+	document.form_find.action = url;
+	document.form_find.submit();
+
+}
+
+function find(){
+
+	document.getElementById('type').value='list';
+	var url = [[@{/purchase/psi/psi}]];
+	document.form_find.action = url;
+	document.form_find.submit();
+	
+}
+
+
+function send(ima01){
+
+		var url = [[@{/purchase/psi/psi_save}]];
+
+		document.getElementById('ima01').value=ima01;
+		document.getElementById('ps').value=document.getElementById('ps_'+ima01).value;
+		
+		document.getElementById('set_d2').value=document.getElementById('d2_'+ima01).value;
+		document.getElementById('set_d3').value=document.getElementById('d3_'+ima01).value;
+		document.getElementById('set_d4').value=document.getElementById('d4_'+ima01).value;
+		document.getElementById('set_d5').value=document.getElementById('d5_'+ima01).value;
+		document.getElementById('set_d6').value=document.getElementById('d6_'+ima01).value;
+		
+		document.form1.action = url;
+	
+}
+
+
+</script>
